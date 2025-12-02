@@ -1,26 +1,39 @@
 import emailjs from "@emailjs/browser";
 
-//Menu
 const toggleBtn = document.getElementById("menuToggle")!;
+const closeBtn = document.getElementById("menuClose")!;
 const menu = document.getElementById("menuContainer")!;
+const body = document.body;
 
-toggleBtn.addEventListener("click", () => {
-  menu.classList.toggle("hidden");
+function openMenu() {
+  menu.classList.remove("hidden");
+  body.style.overflow = "hidden";
+}
+
+function closeMenu() {
+  menu.classList.add("hidden");
+  body.style.overflow = "";
+}
+
+toggleBtn.addEventListener("click", openMenu);
+
+closeBtn.addEventListener("click", closeMenu);
+
+document.querySelectorAll("#menuContainer a").forEach((link) => {
+  link.addEventListener("click", closeMenu);
 });
 
-// Fetch JSON Data
 fetch("https://yatskiv-yurij.github.io/Info/data.json")
   .then((response) => response.json())
   .then((json) => {
     const projects = json.projects;
     console.log(projects);
-    const projectsDiv = document.getElementById("projects");
+    const projectsDiv = document.getElementById("projects-items");
     projects.forEach((project: any) => {
       const card = document.createElement("div");
       card.classList.add("border-2", "rounded", "project", "flex", "flex-col");
       card.dataset.category = project.section;
 
-      // формуємо HTML всередині цього div
       card.innerHTML = `
       <div class="img-box">
         <img src="./${project.image}" alt="${project.name}" />
@@ -52,28 +65,29 @@ fetch("https://yatskiv-yurij.github.io/Info/data.json")
       </div>
   `;
 
-      // додаємо картку у контейнер
-      projectsDiv.appendChild(card);
+      projectsDiv!.appendChild(card);
     });
   })
   .then(() => {
     const buttons = document.querySelectorAll(".filter-btn");
     const projects = document.querySelectorAll(".project");
-    let activeButton = document.querySelector(".filter-btn.bg-white"); // стартова активна
+    let activeButton = document.querySelector(".filter-btn.bg-white");
 
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
-        const filter = button.dataset.filter;
+        const filter = (button as HTMLElement).dataset.filter;
 
         // фільтрація
         projects.forEach((project) => {
           project.classList.toggle(
             "hidden",
-            !(filter === "all" || project.dataset.category === filter)
+            !(
+              filter === "all" ||
+              (project as HTMLElement).dataset.category === filter
+            )
           );
         });
 
-        // оновлення активної кнопки
         if (activeButton) {
           activeButton.classList.remove("bg-white", "text-black");
           activeButton.classList.add("bg-black", "text-white");
@@ -81,13 +95,12 @@ fetch("https://yatskiv-yurij.github.io/Info/data.json")
         button.classList.remove("text-white");
         button.classList.add("bg-white", "text-black");
 
-        activeButton = button; // оновлюємо поточну активну
+        activeButton = button;
       });
     });
   })
   .catch((error) => console.error("Помилка при завантаженні:", error));
 
-//Contact Form
 const form = document.getElementById("contact-form") as HTMLFormElement;
 
 if (form) {
@@ -111,5 +124,3 @@ if (form) {
       });
   });
 }
-
-//Project Filter

@@ -16,7 +16,6 @@ body {
 }
 
 .menu-link {
-  margin-right: 32px;
   font-weight: 600;
 }
 
@@ -27,18 +26,18 @@ body {
 
 .header-developer {
   font-family: sans-serif;
-  letter-spacing: -5px;
+  letter-spacing: -3px;
   -webkit-text-stroke: 3px black;
 }
 
 .photo-wrapper {
-  width: 45%; /* діаметр круга */
-  height: auto;
-  background-color: black; /* чорний фон */
+  width: 45%;
+  padding-top: 40px;
+  background-color: black;
   border-radius: 50%;
   display: flex;
-  flex-direction: column; /* вертикальний напрямок */
-  align-items: center; /* центрування по горизонталі */
+  flex-direction: column;
+  align-items: center;
   justify-content: flex-end;
   overflow: hidden;
 }
@@ -48,9 +47,14 @@ body {
   border-radius: 80%;
   filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 1));
 }
+*/ .photo {
+  width: 100%;
+  border-radius: 80%;
+  filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 1));
+}
 
 .skill-item {
-  width: calc((100% - 4 * 70px) / 5);
+  width: calc((100% - 30px) / 2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,9 +87,17 @@ body {
   stroke: white;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .img-box {
   width: 100%;
-  aspect-ratio: 16 / 9; /* або 4/3, або 1/1 */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
 
@@ -106,9 +118,9 @@ body {
   position: absolute;
   top: 7px;
   left: -2px;
-  width: 1px; /* товщина лінії */
-  height: calc(100% - 65px); /* висота лінії */
-  background-color: white; /* колір лінії */
+  width: 1px;
+  height: calc(100% - 65px);
+  background-color: white;
 }
 
 .education .line2::before {
@@ -116,13 +128,58 @@ body {
   position: absolute;
   top: 7px;
   left: -2px;
-  width: 1px; /* товщина лінії */
-  height: calc(65% - 65px); /* висота лінії */
-  background-color: white; /* колір лінії */
+  width: 1px;
+  height: calc(85% - 65px);
+  background-color: white;
 }
 
 .contacts__talk {
   font-family: sans-serif;
   letter-spacing: -3px;
   -webkit-text-stroke: 3px black;
+}
+
+@media (min-width: 480px) {
+  .skills-list {
+    gap: 40px 20px;
+  }
+  .skill-item {
+    width: calc((100% - 2 * 20px) / 3);
+  }
+}
+
+@media (min-width: 48rem) {
+  .menu-link {
+    margin-right: 32px;
+  }
+  .header-developer {
+    letter-spacing: -3px;
+  }
+  .skill-item {
+    width: calc((100% - 3 * 40px) / 4);
+  }
+
+  .education .line2::before {
+    height: calc(64% - 65px);
+  }
+}
+
+@media (min-width: 64rem) {
+  .header-developer {
+    letter-spacing: -5px;
+  }
+
+  .photo-wrapper {
+    width: 45%;
+    aspect-ratio: 6 / 7;
+  }
+  .skill-item {
+    width: calc((100% - 4 * 70px) / 5);
+  }
+}
+
+@media (min-width: 80rem) {
+  .photo-wrapper {
+    height: auto;
+  }
 }
